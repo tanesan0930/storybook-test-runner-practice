@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { UserForm } from './UserForm';
+import { within, userEvent } from '@storybook/testing-library';
 
 const meta = {
   component: UserForm,
@@ -9,3 +10,59 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+// nameの入力
+export const InputName: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const nameInput = canvas.getByRole('textbox', {
+      name: 'Name',
+    });
+    await userEvent.type(nameInput, 'example-name', {
+      delay: 100,
+    });
+  },
+};
+
+// ageの入力
+export const InputAge: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const ageInput = canvas.getByRole('spinbutton', {
+      name: 'Age',
+    });
+    await userEvent.type(ageInput, '20', {
+      delay: 100,
+    });
+  },
+};
+
+// emailの入力
+export const InputEmail: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const emailInput = canvas.getByRole('textbox', {
+      name: 'Email',
+    });
+    await userEvent.type(emailInput, 'example-email@email.com', {
+      delay: 100,
+    });
+  },
+};
+
+export const InputAll: Story = {
+  play: async (ctx) => {
+    await InputName.play?.(ctx);
+    await InputAge.play?.(ctx);
+    await InputEmail.play?.(ctx);
+    // submit
+    const canvas = within(ctx.canvasElement);
+    const submitButton = canvas.getByRole('button', {
+      name: 'Submit',
+    });
+    await userEvent.click(submitButton);
+  },
+};
