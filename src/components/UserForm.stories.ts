@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { UserForm } from './UserForm';
 import { within, userEvent } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 const meta = {
   component: UserForm,
@@ -58,11 +59,16 @@ export const InputAll: Story = {
     await InputName.play?.(ctx);
     await InputAge.play?.(ctx);
     await InputEmail.play?.(ctx);
-    // submit
+
     const canvas = within(ctx.canvasElement);
     const submitButton = canvas.getByRole('button', {
       name: 'Submit',
     });
     await userEvent.click(submitButton);
+
+    const listItems = canvas.getAllByRole('listitem');
+    expect(listItems[0]).toHaveTextContent('Name: example-name');
+    expect(listItems[1]).toHaveTextContent('Age: 20');
+    expect(listItems[2]).toHaveTextContent('Email: example-email');
   },
 };
