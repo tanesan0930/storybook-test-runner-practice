@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  color = '#007BFF', // デフォルト色を一般的なブルーに設定
+  color = '#73B7BF', // デフォルト色を一般的なブルーに設定
   name = 'ボタン',
   onClick,
   disabled = false,
@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
     color: 'white',
     padding: '10px 20px',
     border: 'none',
-    borderRadius: '5px',
+    borderRadius: '0px',
     cursor: 'pointer',
     fontSize: '1rem',
   };
